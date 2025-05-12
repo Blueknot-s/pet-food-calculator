@@ -5,15 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>반려동물 사료 계산기</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    label { display: block; margin-top: 10px; }
-    input, select, button { width: 100%; padding: 8px; margin-top: 5px; }
-    button { background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background-color: #0056b3; }
-    .result { margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background: #f9f9f9; }
-    .note { font-size: 0.9em; color: #555; margin-top: 5px; }
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; padding: 20px; margin: auto; max-width: 600px; background-color: #fff; }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 12px; font-weight: bold; }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      margin-top: 12px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #f9f9f9;
+      font-size: 16px;
+    }
+    .note {
+      font-size: 0.9em;
+      color: #555;
+      margin-top: 5px;
+    }
     .copy-btn { margin-top: 10px; }
-    @media (max-width: 600px) { body { padding: 10px; } }
+    @media (max-width: 480px) {
+      input, select, button { font-size: 15px; padding: 10px; }
+      h2 { font-size: 20px; }
+    }
   </style>
 </head>
 <body>
