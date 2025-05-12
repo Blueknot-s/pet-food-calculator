@@ -8,7 +8,10 @@
     body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
     label { display: block; margin-top: 10px; }
     input, select, button { width: 100%; padding: 8px; margin-top: 5px; }
+    button { background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
     .result { margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background: #f9f9f9; }
+    .note { font-size: 0.9em; color: #555; margin-top: 5px; }
     .copy-btn { margin-top: 10px; }
     @media (max-width: 600px) { body { padding: 10px; } }
   </style>
@@ -16,6 +19,7 @@
 <body>
   <h2>반려동물 사료 계산기</h2>
   <button onclick="fillExample()">예시값 입력</button>
+  <button onclick="resetForm()">입력 초기화</button>
 
   <label for="petType">반려동물 종류:</label>
   <select id="petType">
@@ -44,10 +48,11 @@
   <input type="number" id="foodCalorie" placeholder="예: 350">
 
   <label for="foodUnit">계산 기준 단위:</label>
-  <select id="foodUnit">
+  <select id="foodUnit" onchange="showConversionHint()">
     <option value="g">g</option>
     <option value="cup">컵</option>
   </select>
+  <div class="note" id="unitHint"></div>
 
   <label for="foodAmount">보유 사료량 (kg):</label>
   <input type="number" id="foodAmount" placeholder="예: 2">
@@ -70,6 +75,27 @@
       document.getElementById('foodUnit').value = 'g';
       document.getElementById('foodAmount').value = 2;
       document.getElementById('petCount').value = 1;
+      showConversionHint();
+    }
+
+    function resetForm() {
+      document.getElementById('petType').value = 'dog';
+      document.getElementById('weight').value = '';
+      document.getElementById('ageGroup').value = 'adult';
+      document.getElementById('activityLevel').value = 'normal';
+      document.getElementById('foodCalorie').value = '';
+      document.getElementById('foodUnit').value = 'g';
+      document.getElementById('foodAmount').value = '';
+      document.getElementById('petCount').value = 1;
+      document.getElementById('unitHint').innerText = '';
+      document.getElementById('result').style.display = 'none';
+      document.querySelector('.copy-btn').style.display = 'none';
+    }
+
+    function showConversionHint() {
+      const unit = document.getElementById('foodUnit').value;
+      const hint = unit === 'cup' ? '※ 컵 단위는 대략 1컵 = 100g 기준으로 계산됩니다.' : '';
+      document.getElementById('unitHint').innerText = hint;
     }
 
     function calculate() {
@@ -104,7 +130,7 @@
 
       const dailyAmount = foodUnit === 'g'
         ? `${dailyGramsPerPet.toFixed(1)} g`
-        : `${(dailyGramsPerPet / 100).toFixed(2)} 컵`;
+        : `${(dailyGramsPerPet / 100).toFixed(2)} 컵 (약 ${dailyGramsPerPet.toFixed(1)} g)`;
 
       const result = `
         <strong>마리당 하루 권장 사료량:</strong> ${dailyAmount}<br>
